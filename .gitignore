@@ -1,0 +1,16 @@
+Binaries/
+Build/
+DerivedDataCache/
+Intermediate/
+Saved/
+
+.vs/
+.vscode/
+*.sln
+*.suo
+*.VC.db
+*.opendb
+
+/Builds/
+
+Config/DefaultEditorPerProjectUserSettings.ini
