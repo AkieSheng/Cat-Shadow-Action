@@ -1,0 +1,15 @@
+| 资产名                 | 类型       | 用途            |
+| ------------------- | -------- | ------------- |
+| M_Neon_BluePurple   | Material | 安全阶段灯光、普通科技材质 |
+| M_Neon_Yellow       | Material | 警觉阶段          |
+| M_Neon_Red          | Material | 警报、撤离点、激光     |
+| M_Safe_Normal       | Material | 普通保险箱         |
+| M_Safe_Encrypted    | Material | 加密保险箱         |
+| M_Safe_Advanced     | Material | 高级保险箱         |
+| M_AccessCard        | Material | 门禁卡           |
+| M_CoreDrive         | Material | 核心硬盘          |
+| M_Extraction_Open   | Material | 开放撤离点         |
+| M_Extraction_Closed | Material | 封锁撤离点         |
+| M_CameraCone_Blue   | Material | 摄像头普通扫描范围     |
+| M_CameraCone_Red    | Material | 摄像头发现/冷却提示    |
+| M_LaserBeam         | Material | 激光束           |
