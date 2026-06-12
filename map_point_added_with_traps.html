@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>猫影行动｜地图完整版</title>
+<style>
+
+
+:root {
+  --bg: #f4f4f4;
+  --panel: #ffffff;
+  --line: #000000;
+  --hidden: #dcefff;
+  --door: #8a8a8a;
+  --red: #e60000;
+  --green: #00b520;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: #111;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+}
+main { max-width: 1180px; margin: 0 auto; padding: 28px 20px 48px; }
+h1 { margin: 0 0 10px; font-size: 28px; }
+h2 { margin: 0 0 6px; font-size: 20px; }
+p { margin: 6px 0; line-height: 1.7; }
+.note, .legend {
+  background: var(--panel);
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin: 14px 0 20px;
+}
+.legend span { display: inline-flex; align-items: center; gap: 8px; margin-right: 18px; margin-bottom: 8px; white-space: nowrap; }
+.dot { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
+.dot.red { background: var(--red); }
+.dot.green { background: var(--green); }
+.box.blue { width: 18px; height: 14px; background: var(--hidden); border: 1px solid #aaa; display: inline-block; }
+.line-sample { width: 28px; height: 0; border-top: 5px solid var(--line); display: inline-block; }
+.door-sample { width: 28px; height: 0; border-top: 5px solid var(--door); display: inline-block; }
+.map-card {
+  background: var(--panel);
+  border: 1px solid #d9d9d9;
+  border-radius: 18px;
+  padding: 16px;
+  margin: 22px 0;
+  box-shadow: 0 8px 24px rgba(0,0,0,.06);
+}
+.card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.tag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #eeeeee;
+  font-size: 12px;
+  font-weight: 600;
+}
+.svg-wrap {
+  width: 100%;
+  overflow: auto;
+  border: 1px solid #e6e6e6;
+  border-radius: 14px;
+  background: white;
+}
+.maze-svg {
+  display: block;
+  width: min(100%, 980px);
+  height: auto;
+  margin: 0 auto;
+  background: white;
+}
+.meta {
+  font-size: 13px;
+  color: #444;
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-top: 12px;
+}
+code { background:#f0f0f0; padding: 1px 5px; border-radius: 4px; }
+
+
+
+.spawn-note {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 12px 16px;
+  margin: 12px 0 20px;
+}
+.letter-sample {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  display: inline-block;
+  min-width: 18px;
+  text-align: center;
+}
+.letter-c { color: #0057d9; }
+.letter-b { color: #111111; }
+
+
+
+.laser-sample {
+  width: 30px;
+  height: 0;
+  border-top: 5px solid #ff2a2a;
+  display: inline-block;
+  box-shadow: 0 0 6px rgba(255, 42, 42, .75);
+}
+.camera-sample {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #7a35ff;
+  display: inline-block;
+  box-shadow: 0 0 6px rgba(122, 53, 255, .65);
+}
+.letter-l { color: #ff2a2a; }
+.letter-cam { color: #7a35ff; font-size: 14px; min-width: 36px; }
+</style>
+</head>
+<body>
+<main>
+<h1>猫影行动｜地图完整版</h1>
+<div class="legend">
+<span><i class="line-sample"></i>黑色线：墙体/边界</span>
+<span><i class="box blue"></i>浅蓝：隐藏区 / 门禁特殊区</span>
+<span><i class="door-sample"></i>灰色线：隐藏区房门</span>
+<span><i class="dot green"></i>绿色点：入口</span>
+<span><i class="dot red"></i>红色点：撤离点</span>
+<span><i class="letter-sample letter-c">C</i>门禁卡点位（贴墙）</span>
+<span><i class="letter-sample letter-b">B</i>保险箱点位（格子内下角标）</span>
+<span><i class="laser-sample"></i>激光点位 L</span><span><i class="camera-sample"></i>摄像头点位 CAM / 紫色扫描区</span></div>
+<section class="map-card" id="map-spawn-plan-3">
+<div class="card-head">
+<div>
+<h2>Map_CentralDataFork_WithTraps</h2>
+</div>
+</div>
+<div class="svg-wrap">
+<svg aria-label="Map_CentralDataFork_SpawnPlan_3" class="maze-svg" height="1000" role="img" viewbox="0 0 1000 1000" width="1000" xmlns="http://www.w3.org/2000/svg">
+<title>Map_CentralDataFork_SpawnPlan_3_Expanded</title>
+<desc>Trap layout with corrected laser points. Laser cells only use positions where N+S walls or W+E walls are both present. Camera points remain unchanged.</desc>
+<rect fill="#ffffff" height="1000" id="background" width="1000" x="0" y="0"></rect>
+<g fill="#ffffff" id="normal-floor" stroke="none">
+<rect fill="#ffffff" height="68.46" id="cell-0-0" stroke="none" width="68.46" x="55.00" y="55.00"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-0-1" stroke="none" width="68.46" x="123.46" y="55.00"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-0-2" stroke="none" width="68.46" x="191.92" y="55.00"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-0-3" stroke="none" width="68.46" x="260.38" y="55.00"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-0-4" stroke="none" width="68.46" x="328.85" y="55.00"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-0-5" stroke="none" width="68.46" x="397.31" y="55.00"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-0-6" stroke="none" width="68.46" x="465.77" y="55.00"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-0-7" stroke="none" width="68.46" x="534.23" y="55.00"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-0-8" stroke="none" width="68.46" x="602.69" y="55.00"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-0-9" stroke="none" width="68.46" x="671.15" y="55.00"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-0-10" stroke="none" width="68.46" x="739.62" y="55.00"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-0-11" stroke="none" width="68.46" x="808.08" y="55.00"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-0-12" stroke="none" width="68.46" x="876.54" y="55.00"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-1-0" stroke="none" width="68.46" x="55.00" y="123.46"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-1-1" stroke="none" width="68.46" x="123.46" y="123.46"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-1-2" stroke="none" width="68.46" x="191.92" y="123.46"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-1-3" stroke="none" width="68.46" x="260.38" y="123.46"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-1-4" stroke="none" width="68.46" x="328.85" y="123.46"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-1-5" stroke="none" width="68.46" x="397.31" y="123.46"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-1-6" stroke="none" width="68.46" x="465.77" y="123.46"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-1-7" stroke="none" width="68.46" x="534.23" y="123.46"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-1-8" stroke="none" width="68.46" x="602.69" y="123.46"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-1-9" stroke="none" width="68.46" x="671.15" y="123.46"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-1-10" stroke="none" width="68.46" x="739.62" y="123.46"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-1-11" stroke="none" width="68.46" x="808.08" y="123.46"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-1-12" stroke="none" width="68.46" x="876.54" y="123.46"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-2-0" stroke="none" width="68.46" x="55.00" y="191.92"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-2-1" stroke="none" width="68.46" x="123.46" y="191.92"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-2-2" stroke="none" width="68.46" x="191.92" y="191.92"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-2-5" stroke="none" width="68.46" x="397.31" y="191.92"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-2-6" stroke="none" width="68.46" x="465.77" y="191.92"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-2-7" stroke="none" width="68.46" x="534.23" y="191.92"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-2-8" stroke="none" width="68.46" x="602.69" y="191.92"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-2-9" stroke="none" width="68.46" x="671.15" y="191.92"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-2-10" stroke="none" width="68.46" x="739.62" y="191.92"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-2-11" stroke="none" width="68.46" x="808.08" y="191.92"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-2-12" stroke="none" width="68.46" x="876.54" y="191.92"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-3-0" stroke="none" width="68.46" x="55.00" y="260.38"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-3-1" stroke="none" width="68.46" x="123.46" y="260.38"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-3-2" stroke="none" width="68.46" x="191.92" y="260.38"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-3-3" stroke="none" width="68.46" x="260.38" y="260.38"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-3-5" stroke="none" width="68.46" x="397.31" y="260.38"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-3-6" stroke="none" width="68.46" x="465.77" y="260.38"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-3-7" stroke="none" width="68.46" x="534.23" y="260.38"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-3-8" stroke="none" width="68.46" x="602.69" y="260.38"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-3-9" stroke="none" width="68.46" x="671.15" y="260.38"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-3-10" stroke="none" width="68.46" x="739.62" y="260.38"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-3-11" stroke="none" width="68.46" x="808.08" y="260.38"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-3-12" stroke="none" width="68.46" x="876.54" y="260.38"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-4-0" stroke="none" width="68.46" x="55.00" y="328.85"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-4-1" stroke="none" width="68.46" x="123.46" y="328.85"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-4-2" stroke="none" width="68.46" x="191.92" y="328.85"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-4-3" stroke="none" width="68.46" x="260.38" y="328.85"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-4-4" stroke="none" width="68.46" x="328.85" y="328.85"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-4-5" stroke="none" width="68.46" x="397.31" y="328.85"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-4-6" stroke="none" width="68.46" x="465.77" y="328.85"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-4-7" stroke="none" width="68.46" x="534.23" y="328.85"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-4-8" stroke="none" width="68.46" x="602.69" y="328.85"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-4-9" stroke="none" width="68.46" x="671.15" y="328.85"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-4-10" stroke="none" width="68.46" x="739.62" y="328.85"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-4-11" stroke="none" width="68.46" x="808.08" y="328.85"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-4-12" stroke="none" width="68.46" x="876.54" y="328.85"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-5-0" stroke="none" width="68.46" x="55.00" y="397.31"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-5-1" stroke="none" width="68.46" x="123.46" y="397.31"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-5-2" stroke="none" width="68.46" x="191.92" y="397.31"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-5-3" stroke="none" width="68.46" x="260.38" y="397.31"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-5-4" stroke="none" width="68.46" x="328.85" y="397.31"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-5-5" stroke="none" width="68.46" x="397.31" y="397.31"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-5-6" stroke="none" width="68.46" x="465.77" y="397.31"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-5-7" stroke="none" width="68.46" x="534.23" y="397.31"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-5-8" stroke="none" width="68.46" x="602.69" y="397.31"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-5-10" stroke="none" width="68.46" x="739.62" y="397.31"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-5-11" stroke="none" width="68.46" x="808.08" y="397.31"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-5-12" stroke="none" width="68.46" x="876.54" y="397.31"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-6-0" stroke="none" width="68.46" x="55.00" y="465.77"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-6-1" stroke="none" width="68.46" x="123.46" y="465.77"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-6-2" stroke="none" width="68.46" x="191.92" y="465.77"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-6-3" stroke="none" width="68.46" x="260.38" y="465.77"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-6-4" stroke="none" width="68.46" x="328.85" y="465.77"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-6-5" stroke="none" width="68.46" x="397.31" y="465.77"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-6-6" stroke="none" width="68.46" x="465.77" y="465.77"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-6-7" stroke="none" width="68.46" x="534.23" y="465.77"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-6-8" stroke="none" width="68.46" x="602.69" y="465.77"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-6-11" stroke="none" width="68.46" x="808.08" y="465.77"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-6-12" stroke="none" width="68.46" x="876.54" y="465.77"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-7-0" stroke="none" width="68.46" x="55.00" y="534.23"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-7-1" stroke="none" width="68.46" x="123.46" y="534.23"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-7-2" stroke="none" width="68.46" x="191.92" y="534.23"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-7-3" stroke="none" width="68.46" x="260.38" y="534.23"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-7-4" stroke="none" width="68.46" x="328.85" y="534.23"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-7-5" stroke="none" width="68.46" x="397.31" y="534.23"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-7-6" stroke="none" width="68.46" x="465.77" y="534.23"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-7-7" stroke="none" width="68.46" x="534.23" y="534.23"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-7-8" stroke="none" width="68.46" x="602.69" y="534.23"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-7-9" stroke="none" width="68.46" x="671.15" y="534.23"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-7-10" stroke="none" width="68.46" x="739.62" y="534.23"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-7-11" stroke="none" width="68.46" x="808.08" y="534.23"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-7-12" stroke="none" width="68.46" x="876.54" y="534.23"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-8-0" stroke="none" width="68.46" x="55.00" y="602.69"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-8-1" stroke="none" width="68.46" x="123.46" y="602.69"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-8-2" stroke="none" width="68.46" x="191.92" y="602.69"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-8-3" stroke="none" width="68.46" x="260.38" y="602.69"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-8-4" stroke="none" width="68.46" x="328.85" y="602.69"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-8-5" stroke="none" width="68.46" x="397.31" y="602.69"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-8-6" stroke="none" width="68.46" x="465.77" y="602.69"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-8-7" stroke="none" width="68.46" x="534.23" y="602.69"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-8-8" stroke="none" width="68.46" x="602.69" y="602.69"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-8-9" stroke="none" width="68.46" x="671.15" y="602.69"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-8-10" stroke="none" width="68.46" x="739.62" y="602.69"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-8-11" stroke="none" width="68.46" x="808.08" y="602.69"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-8-12" stroke="none" width="68.46" x="876.54" y="602.69"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-9-0" stroke="none" width="68.46" x="55.00" y="671.15"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-9-1" stroke="none" width="68.46" x="123.46" y="671.15"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-9-3" stroke="none" width="68.46" x="260.38" y="671.15"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-9-4" stroke="none" width="68.46" x="328.85" y="671.15"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-9-5" stroke="none" width="68.46" x="397.31" y="671.15"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-9-6" stroke="none" width="68.46" x="465.77" y="671.15"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-9-7" stroke="none" width="68.46" x="534.23" y="671.15"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-9-8" stroke="none" width="68.46" x="602.69" y="671.15"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-9-9" stroke="none" width="68.46" x="671.15" y="671.15"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-9-10" stroke="none" width="68.46" x="739.62" y="671.15"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-9-11" stroke="none" width="68.46" x="808.08" y="671.15"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-9-12" stroke="none" width="68.46" x="876.54" y="671.15"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-10-0" stroke="none" width="68.46" x="55.00" y="739.62"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-10-1" stroke="none" width="68.46" x="123.46" y="739.62"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-10-3" stroke="none" width="68.46" x="260.38" y="739.62"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-10-4" stroke="none" width="68.46" x="328.85" y="739.62"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-10-5" stroke="none" width="68.46" x="397.31" y="739.62"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-10-6" stroke="none" width="68.46" x="465.77" y="739.62"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-10-7" stroke="none" width="68.46" x="534.23" y="739.62"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-10-8" stroke="none" width="68.46" x="602.69" y="739.62"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-10-10" stroke="none" width="68.46" x="739.62" y="739.62"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-10-11" stroke="none" width="68.46" x="808.08" y="739.62"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-10-12" stroke="none" width="68.46" x="876.54" y="739.62"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-11-0" stroke="none" width="68.46" x="55.00" y="808.08"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-11-1" stroke="none" width="68.46" x="123.46" y="808.08"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-11-2" stroke="none" width="68.46" x="191.92" y="808.08"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-11-3" stroke="none" width="68.46" x="260.38" y="808.08"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-11-4" stroke="none" width="68.46" x="328.85" y="808.08"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-11-5" stroke="none" width="68.46" x="397.31" y="808.08"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-11-6" stroke="none" width="68.46" x="465.77" y="808.08"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-11-7" stroke="none" width="68.46" x="534.23" y="808.08"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-11-8" stroke="none" width="68.46" x="602.69" y="808.08"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-11-11" stroke="none" width="68.46" x="808.08" y="808.08"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-11-12" stroke="none" width="68.46" x="876.54" y="808.08"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-12-0" stroke="none" width="68.46" x="55.00" y="876.54"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-12-1" stroke="none" width="68.46" x="123.46" y="876.54"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-12-2" stroke="none" width="68.46" x="191.92" y="876.54"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-12-3" stroke="none" width="68.46" x="260.38" y="876.54"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-12-4" stroke="none" width="68.46" x="328.85" y="876.54"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-12-5" stroke="none" width="68.46" x="397.31" y="876.54"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-12-6" stroke="none" width="68.46" x="465.77" y="876.54"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-12-7" stroke="none" width="68.46" x="534.23" y="876.54"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-12-8" stroke="none" width="68.46" x="602.69" y="876.54"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-12-9" stroke="none" width="68.46" x="671.15" y="876.54"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-12-10" stroke="none" width="68.46" x="739.62" y="876.54"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-12-11" stroke="none" width="68.46" x="808.08" y="876.54"></rect>
+<rect fill="#ffffff" height="68.46" id="cell-12-12" stroke="none" width="68.46" x="876.54" y="876.54"></rect>
+</g>
+<g fill="#dcefff" id="hidden-areas" stroke="none">
+<g data-cells="[(2, 3), (2, 4), (3, 4)]" id="hidden-zone-1">
+<rect fill="#dcefff" height="68.46" id="hidden-zone-1-cell-1" stroke="none" width="68.46" x="260.38" y="191.92"></rect>
+<rect fill="#dcefff" height="68.46" id="hidden-zone-1-cell-2" stroke="none" width="68.46" x="328.85" y="191.92"></rect>
+<rect fill="#dcefff" height="68.46" id="hidden-zone-1-cell-3" stroke="none" width="68.46" x="328.85" y="260.38"></rect>
+</g>
+<g data-cells="[(5, 9), (6, 9), (6, 10)]" id="hidden-zone-2">
+<rect fill="#dcefff" height="68.46" id="hidden-zone-2-cell-1" stroke="none" width="68.46" x="671.15" y="397.31"></rect>
+<rect fill="#dcefff" height="68.46" id="hidden-zone-2-cell-2" stroke="none" width="68.46" x="671.15" y="465.77"></rect>
+<rect fill="#dcefff" height="68.46" id="hidden-zone-2-cell-3" stroke="none" width="68.46" x="739.62" y="465.77"></rect>
+</g>
+<g data-cells="[(9, 2), (10, 2)]" id="hidden-zone-3">
+<rect fill="#dcefff" height="68.46" id="hidden-zone-3-cell-1" stroke="none" width="68.46" x="191.92" y="671.15"></rect>
+<rect fill="#dcefff" height="68.46" id="hidden-zone-3-cell-2" stroke="none" width="68.46" x="191.92" y="739.62"></rect>
+</g>
+<g data-cells="[(10, 9), (11, 9), (11, 10)]" id="hidden-zone-4">
+<rect fill="#dcefff" height="68.46" id="hidden-zone-4-cell-1" stroke="none" width="68.46" x="671.15" y="739.62"></rect>
+<rect fill="#dcefff" height="68.46" id="hidden-zone-4-cell-2" stroke="none" width="68.46" x="671.15" y="808.08"></rect>
+<rect fill="#dcefff" height="68.46" id="hidden-zone-4-cell-3" stroke="none" width="68.46" x="739.62" y="808.08"></rect>
+</g>
+</g>
+<g fill="none" id="maze-walls" stroke="#000000" stroke-linecap="square" stroke-linejoin="miter" stroke-width="5.5">
+<rect fill="none" height="890.00" stroke="#000000" stroke-width="6" width="890.00" x="55.00" y="55.00"></rect>
+<line id="wall-1" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="55.00" x2="123.46" y1="123.46" y2="123.46"></line>
+<line id="wall-2" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="191.92" x2="260.38" y1="123.46" y2="123.46"></line>
+<line id="wall-3" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="328.85" x2="328.85" y1="55.00" y2="123.46"></line>
+<line id="wall-4" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="397.31" x2="465.77" y1="123.46" y2="123.46"></line>
+<line id="wall-5" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="465.77" x2="534.23" y1="123.46" y2="123.46"></line>
+<line id="wall-6" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="602.69" x2="671.15" y1="123.46" y2="123.46"></line>
+<line id="wall-7" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="808.08" x2="808.08" y1="55.00" y2="123.46"></line>
+<line id="wall-8" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="808.08" x2="876.54" y1="123.46" y2="123.46"></line>
+<line id="wall-9" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="191.92" x2="191.92" y1="123.46" y2="191.92"></line>
+<line id="wall-10" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="328.85" x2="328.85" y1="123.46" y2="191.92"></line>
+<line id="wall-11" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="328.85" x2="397.31" y1="191.92" y2="191.92"></line>
+<line id="wall-12" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="602.69" x2="602.69" y1="123.46" y2="191.92"></line>
+<line id="wall-13" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="534.23" x2="602.69" y1="191.92" y2="191.92"></line>
+<line id="wall-14" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="739.62" x2="739.62" y1="123.46" y2="191.92"></line>
+<line id="wall-15" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="739.62" x2="808.08" y1="191.92" y2="191.92"></line>
+<line id="wall-16" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="123.46" x2="123.46" y1="191.92" y2="260.38"></line>
+<line id="wall-17" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="260.38" x2="260.38" y1="191.92" y2="260.38"></line>
+<line id="wall-18" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="260.38" x2="328.85" y1="260.38" y2="260.38"></line>
+<line id="wall-19" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="397.31" x2="397.31" y1="191.92" y2="260.38"></line>
+<line id="wall-20" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="465.77" x2="465.77" y1="191.92" y2="260.38"></line>
+<line id="wall-21" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="602.69" x2="602.69" y1="191.92" y2="260.38"></line>
+<line id="wall-22" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="671.15" x2="671.15" y1="191.92" y2="260.38"></line>
+<line id="wall-23" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="671.15" x2="739.62" y1="260.38" y2="260.38"></line>
+<line id="wall-24" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="191.92" x2="260.38" y1="328.85" y2="328.85"></line>
+<line id="wall-25" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="328.85" x2="328.85" y1="260.38" y2="328.85"></line>
+<line id="wall-26" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="397.31" x2="397.31" y1="260.38" y2="328.85"></line>
+<line id="wall-27" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="328.85" x2="397.31" y1="328.85" y2="328.85"></line>
+<line id="wall-28" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="534.23" x2="534.23" y1="260.38" y2="328.85"></line>
+<line id="wall-29" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="602.69" x2="602.69" y1="260.38" y2="328.85"></line>
+<line id="wall-30" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="602.69" x2="671.15" y1="328.85" y2="328.85"></line>
+<line id="wall-31" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="739.62" x2="739.62" y1="260.38" y2="328.85"></line>
+<line id="wall-32" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="739.62" x2="808.08" y1="328.85" y2="328.85"></line>
+<line id="wall-33" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="260.38" x2="328.85" y1="397.31" y2="397.31"></line>
+<line id="wall-34" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="602.69" x2="602.69" y1="328.85" y2="397.31"></line>
+<line id="wall-35" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="671.15" x2="739.62" y1="397.31" y2="397.31"></line>
+<line id="wall-36" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="808.08" x2="876.54" y1="397.31" y2="397.31"></line>
+<line id="wall-37" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="123.46" x2="191.92" y1="465.77" y2="465.77"></line>
+<line id="wall-38" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="191.92" x2="260.38" y1="465.77" y2="465.77"></line>
+<line id="wall-39" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="328.85" x2="328.85" y1="397.31" y2="465.77"></line>
+<line id="wall-40" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="534.23" x2="534.23" y1="397.31" y2="465.77"></line>
+<line id="wall-41" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="671.15" x2="671.15" y1="397.31" y2="465.77"></line>
+<line id="wall-42" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="739.62" x2="739.62" y1="397.31" y2="465.77"></line>
+<line id="wall-43" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="739.62" x2="808.08" y1="465.77" y2="465.77"></line>
+<line id="wall-44" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="55.00" x2="123.46" y1="534.23" y2="534.23"></line>
+<line id="wall-45" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="328.85" x2="328.85" y1="465.77" y2="534.23"></line>
+<line id="wall-46" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="397.31" x2="397.31" y1="465.77" y2="534.23"></line>
+<line id="wall-47" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="671.15" x2="671.15" y1="465.77" y2="534.23"></line>
+<line id="wall-48" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="808.08" x2="808.08" y1="465.77" y2="534.23"></line>
+<line id="wall-49" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="739.62" x2="808.08" y1="534.23" y2="534.23"></line>
+<line id="wall-50" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="808.08" x2="876.54" y1="534.23" y2="534.23"></line>
+<line id="wall-51" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="191.92" x2="191.92" y1="534.23" y2="602.69"></line>
+<line id="wall-52" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="123.46" x2="191.92" y1="602.69" y2="602.69"></line>
+<line id="wall-53" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="260.38" x2="328.85" y1="602.69" y2="602.69"></line>
+<line id="wall-54" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="397.31" x2="465.77" y1="602.69" y2="602.69"></line>
+<line id="wall-55" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="671.15" x2="739.62" y1="602.69" y2="602.69"></line>
+<line id="wall-56" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="739.62" x2="808.08" y1="602.69" y2="602.69"></line>
+<line id="wall-57" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="123.46" x2="123.46" y1="602.69" y2="671.15"></line>
+<line id="wall-58" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="260.38" x2="260.38" y1="602.69" y2="671.15"></line>
+<line id="wall-59" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="191.92" x2="260.38" y1="671.15" y2="671.15"></line>
+<line id="wall-60" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="397.31" x2="397.31" y1="602.69" y2="671.15"></line>
+<line id="wall-61" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="328.85" x2="397.31" y1="671.15" y2="671.15"></line>
+<line id="wall-62" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="534.23" x2="534.23" y1="602.69" y2="671.15"></line>
+<line id="wall-63" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="602.69" x2="671.15" y1="671.15" y2="671.15"></line>
+<line id="wall-64" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="808.08" x2="876.54" y1="671.15" y2="671.15"></line>
+<line id="wall-65" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="876.54" x2="945.00" y1="671.15" y2="671.15"></line>
+<line id="wall-66" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="191.92" x2="191.92" y1="671.15" y2="739.62"></line>
+<line id="wall-67" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="328.85" x2="328.85" y1="671.15" y2="739.62"></line>
+<line id="wall-68" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="397.31" x2="465.77" y1="739.62" y2="739.62"></line>
+<line id="wall-69" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="739.62" x2="739.62" y1="671.15" y2="739.62"></line>
+<line id="wall-70" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="739.62" x2="808.08" y1="739.62" y2="739.62"></line>
+<line id="wall-71" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="123.46" x2="123.46" y1="739.62" y2="808.08"></line>
+<line id="wall-72" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="191.92" x2="191.92" y1="739.62" y2="808.08"></line>
+<line id="wall-73" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="260.38" x2="260.38" y1="739.62" y2="808.08"></line>
+<line id="wall-74" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="191.92" x2="260.38" y1="808.08" y2="808.08"></line>
+<line id="wall-75" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="260.38" x2="328.85" y1="808.08" y2="808.08"></line>
+<line id="wall-76" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="602.69" x2="602.69" y1="739.62" y2="808.08"></line>
+<line id="wall-77" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="671.15" x2="671.15" y1="739.62" y2="808.08"></line>
+<line id="wall-78" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="739.62" x2="739.62" y1="739.62" y2="808.08"></line>
+<line id="wall-79" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="739.62" x2="808.08" y1="808.08" y2="808.08"></line>
+<line id="wall-80" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="876.54" x2="945.00" y1="808.08" y2="808.08"></line>
+<line id="wall-81" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="123.46" x2="191.92" y1="876.54" y2="876.54"></line>
+<line id="wall-82" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="534.23" x2="534.23" y1="808.08" y2="876.54"></line>
+<line id="wall-83" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="671.15" x2="671.15" y1="808.08" y2="876.54"></line>
+<line id="wall-84" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="671.15" x2="739.62" y1="876.54" y2="876.54"></line>
+<line id="wall-85" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="808.08" x2="808.08" y1="808.08" y2="876.54"></line>
+<line id="wall-86" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="739.62" x2="808.08" y1="876.54" y2="876.54"></line>
+<line id="wall-87" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="876.54" x2="876.54" y1="808.08" y2="876.54"></line>
+<line id="wall-88" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="328.85" x2="328.85" y1="876.54" y2="945.00"></line>
+<line id="wall-89" stroke="#000" stroke-linecap="square" stroke-width="5.5" x1="465.77" x2="465.77" y1="876.54" y2="945.00"></line>
+</g>
+<g fill="none" id="hidden-zone-doors" stroke="#8a8a8a" stroke-linecap="round" stroke-width="9">
+<line id="hidden-door-1" stroke="#8a8a8a" stroke-linecap="round" stroke-width="9" x1="272.38" x2="316.85" y1="191.92" y2="191.92"></line>
+<line id="hidden-door-2" stroke="#8a8a8a" stroke-linecap="round" stroke-width="9" x1="683.15" x2="727.62" y1="534.23" y2="534.23"></line>
+<line id="hidden-door-3" stroke="#8a8a8a" stroke-linecap="round" stroke-width="9" x1="260.38" x2="260.38" y1="683.15" y2="727.62"></line>
+<line id="hidden-door-4" stroke="#8a8a8a" stroke-linecap="round" stroke-width="9" x1="683.15" x2="727.62" y1="739.62" y2="739.62"></line>
+</g>
+<g id="markers">
+<circle cx="500.00" cy="89.23" data-cell="(0, 6)" fill="#00b520" id="player-entry" r="14"></circle>
+<circle cx="89.23" cy="910.77" data-cell="(12, 0)" data-wall-count="2" fill="#e60000" id="extraction-1" r="12"></circle>
+<circle cx="910.77" cy="842.31" data-cell="(11, 12)" data-wall-count="3" fill="#e60000" id="extraction-2" r="12"></circle>
+<circle cx="363.08" cy="636.92" data-cell="(8, 4)" data-wall-count="2" fill="#e60000" id="extraction-3" r="12"></circle>
+<circle cx="636.92" cy="157.69" data-cell="(1, 8)" data-wall-count="2" fill="#e60000" id="extraction-4" r="12"></circle>
+<circle cx="226.15" cy="157.69" data-cell="(1, 2)" data-wall-count="2" fill="#e60000" id="extraction-5" r="12"></circle>
+<circle cx="842.31" cy="500.00" data-cell="(6, 11)" data-wall-count="2" fill="#e60000" id="extraction-6" r="12"></circle>
+</g><g id="trap-points"><g fill="#7a35ff" fill-opacity="0.13" id="camera-scan-areas" stroke="#7a35ff" stroke-opacity="0.35" stroke-width="2"><polygon data-cell="(1, 9)" data-facing="E" id="camera-01-scan" points="715.38,157.69 825.19,120.04 825.19,195.35"></polygon><polygon data-cell="(3, 11)" data-facing="S" id="camera-02-scan" points="842.31,304.62 804.65,414.42 879.96,414.42"></polygon><polygon data-cell="(5, 7)" data-facing="E" id="camera-03-scan" points="578.46,431.54 688.27,393.88 688.27,469.19"></polygon><polygon data-cell="(7, 3)" data-facing="S" id="camera-04-scan" points="294.62,578.46 256.96,688.27 332.27,688.27"></polygon><polygon data-cell="(9, 11)" data-facing="W" id="camera-05-scan" points="832.31,705.38 722.50,667.73 722.50,743.04"></polygon><polygon data-cell="(11, 4)" data-facing="E" id="camera-06-scan" points="373.08,842.31 482.88,804.65 482.88,879.96"></polygon><polygon data-cell="(2, 1)" data-facing="E" id="camera-07-scan" points="167.69,226.15 277.50,188.50 277.50,263.81"></polygon><polygon data-cell="(7, 1)" data-facing="N" id="camera-08-scan" points="157.69,558.46 120.04,448.65 195.35,448.65"></polygon></g><g fill="none" id="laser-trap-points" stroke="#ff2a2a" stroke-linecap="round" stroke-width="7"><line data-cell="(12, 10)" data-orientation="vertical" data-reason="该格满足上下两侧有墙" data-rule="N+S walls" data-wall-pair="NS" id="laser-01" x1="773.85" x2="773.85" y1="888.54" y2="933.00"></line><line data-cell="(10, 1)" data-orientation="horizontal" data-reason="该格满足左右两侧有墙" data-rule="W+E walls" data-wall-pair="WE" id="laser-02" x1="135.46" x2="179.92" y1="773.85" y2="773.85"></line><line data-cell="(7, 10)" data-orientation="vertical" data-reason="该格满足上下两侧有墙" data-rule="N+S walls" data-wall-pair="NS" id="laser-03" x1="773.85" x2="773.85" y1="546.23" y2="590.69"></line><line data-cell="(2, 5)" data-orientation="horizontal" data-reason="该格满足左右两侧有墙" data-rule="W+E walls" data-wall-pair="WE" id="laser-04" x1="409.31" x2="453.77" y1="226.15" y2="226.15"></line><line data-cell="(10, 8)" data-orientation="horizontal" data-reason="该格满足左右两侧有墙" data-rule="W+E walls" data-wall-pair="WE" id="laser-05" x1="614.69" x2="659.15" y1="773.85" y2="773.85"></line><line data-cell="(0, 2)" data-orientation="vertical" data-reason="该格满足上下两侧有墙" data-rule="N+S walls" data-wall-pair="NS" id="laser-06" x1="226.15" x2="226.15" y1="67.00" y2="111.46"></line><line data-cell="(11, 11)" data-orientation="horizontal" data-reason="该格满足左右两侧有墙" data-rule="W+E walls" data-wall-pair="WE" id="laser-07" x1="820.08" x2="864.54" y1="842.31" y2="842.31"></line><line data-cell="(3, 7)" data-orientation="horizontal" data-reason="该格满足左右两侧有墙" data-rule="W+E walls" data-wall-pair="WE" id="laser-08" x1="546.23" x2="590.69" y1="294.62" y2="294.62"></line><line data-cell="(8, 0)" data-orientation="horizontal" data-reason="该格满足左右两侧有墙" data-rule="W+E walls" data-wall-pair="WE" id="laser-09" x1="67.00" x2="111.46" y1="636.92" y2="636.92"></line><line data-cell="(0, 5)" data-orientation="vertical" data-reason="该格满足上下两侧有墙" data-rule="N+S walls" data-wall-pair="NS" id="laser-10" x1="431.54" x2="431.54" y1="67.00" y2="111.46"></line><line data-cell="(2, 8)" data-orientation="horizontal" data-reason="该格满足左右两侧有墙" data-rule="W+E walls" data-wall-pair="WE" id="laser-11" x1="614.69" x2="659.15" y1="226.15" y2="226.15"></line><line data-cell="(12, 9)" data-orientation="vertical" data-reason="该格满足上下两侧有墙" data-rule="N+S walls" data-wall-pair="NS" id="laser-12" x1="705.38" x2="705.38" y1="888.54" y2="933.00"></line></g><g dominant-baseline="middle" fill="#ff2a2a" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="800" id="laser-labels" paint-order="stroke fill" stroke="#ffffff" stroke-width="3" text-anchor="middle"><text data-cell="(12, 10)" data-wall-pair="NS" id="laser-01-label" x="789.85" y="910.77">L</text><text data-cell="(10, 1)" data-wall-pair="WE" id="laser-02-label" x="157.69" y="757.85">L</text><text data-cell="(7, 10)" data-wall-pair="NS" id="laser-03-label" x="789.85" y="568.46">L</text><text data-cell="(2, 5)" data-wall-pair="WE" id="laser-04-label" x="431.54" y="210.15">L</text><text data-cell="(10, 8)" data-wall-pair="WE" id="laser-05-label" x="636.92" y="757.85">L</text><text data-cell="(0, 2)" data-wall-pair="NS" id="laser-06-label" x="242.15" y="89.23">L</text><text data-cell="(11, 11)" data-wall-pair="WE" id="laser-07-label" x="842.31" y="826.31">L</text><text data-cell="(3, 7)" data-wall-pair="WE" id="laser-08-label" x="568.46" y="278.62">L</text><text data-cell="(8, 0)" data-wall-pair="WE" id="laser-09-label" x="89.23" y="620.92">L</text><text data-cell="(0, 5)" data-wall-pair="NS" id="laser-10-label" x="447.54" y="89.23">L</text><text data-cell="(2, 8)" data-wall-pair="WE" id="laser-11-label" x="636.92" y="210.15">L</text><text data-cell="(12, 9)" data-wall-pair="NS" id="laser-12-label" x="721.38" y="910.77">L</text></g><g dominant-baseline="middle" fill="#7a35ff" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="800" id="camera-trap-points" paint-order="stroke fill" stroke="#ffffff" stroke-width="3" text-anchor="middle"><circle cx="705.38" cy="157.69" data-cell="(1, 9)" data-facing="E" data-reason="覆盖顶部右侧 B/C 线路。" fill="#7a35ff" id="camera-01" r="9" stroke="#ffffff" stroke-width="3"></circle><text data-cell="(1, 9)" data-facing="E" id="camera-01-label" x="705.38" y="141.69">CAM</text><circle cx="842.31" cy="294.62" data-cell="(3, 11)" data-facing="S" data-reason="覆盖右上 B(3,12)、B(4,10) 路线。" fill="#7a35ff" id="camera-02" r="9" stroke="#ffffff" stroke-width="3"></circle><text data-cell="(3, 11)" data-facing="S" id="camera-02-label" x="842.31" y="278.62">CAM</text><circle cx="568.46" cy="431.54" data-cell="(5, 7)" data-facing="E" data-reason="覆盖隐藏区 2 门口和 B(6,8) 路线。" fill="#7a35ff" id="camera-03" r="9" stroke="#ffffff" stroke-width="3"></circle><text data-cell="(5, 7)" data-facing="E" id="camera-03-label" x="568.46" y="415.54">CAM</text><circle cx="294.62" cy="568.46" data-cell="(7, 3)" data-facing="S" data-reason="覆盖中下左侧通道和隐藏区 3 上方路线。" fill="#7a35ff" id="camera-04" r="9" stroke="#ffffff" stroke-width="3"></circle><text data-cell="(7, 3)" data-facing="S" id="camera-04-label" x="294.62" y="552.46">CAM</text><circle cx="842.31" cy="705.38" data-cell="(9, 11)" data-facing="W" data-reason="覆盖右下普通 B、C 与隐藏区 4 外侧路线。" fill="#7a35ff" id="camera-05" r="9" stroke="#ffffff" stroke-width="3"></circle><text data-cell="(9, 11)" data-facing="W" id="camera-05-label" x="842.31" y="689.38">CAM</text><circle cx="363.08" cy="842.31" data-cell="(11, 4)" data-facing="E" data-reason="覆盖底部中段 B(12,4)、B(11,8) 路线。" fill="#7a35ff" id="camera-06" r="9" stroke="#ffffff" stroke-width="3"></circle><text data-cell="(11, 4)" data-facing="E" id="camera-06-label" x="363.08" y="826.31">CAM</text><circle cx="157.69" cy="226.15" data-cell="(2, 1)" data-facing="E" data-reason="覆盖左上普通 B(2,0) 和隐藏区 1 外侧路线。" fill="#7a35ff" id="camera-07" r="9" stroke="#ffffff" stroke-width="3"></circle><text data-cell="(2, 1)" data-facing="E" id="camera-07-label" x="157.69" y="210.15">CAM</text><circle cx="157.69" cy="568.46" data-cell="(7, 1)" data-facing="N" data-reason="覆盖左侧 C(7,0) 与普通 B(5,2) 附近路线。" fill="#7a35ff" id="camera-08" r="9" stroke="#ffffff" stroke-width="3"></circle><text data-cell="(7, 1)" data-facing="N" id="camera-08-label" x="157.69" y="552.46">CAM</text></g></g><g id="spawn-points"><g dominant-baseline="middle" fill="#111111" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" id="safe-box-points" paint-order="stroke fill" stroke="#ffffff" stroke-width="3" text-anchor="middle"><text data-cell="(0, 4)" data-kind="normal" id="safe-B-3-01" x="383.31" y="110.46">B</text><text data-cell="(0, 12)" data-kind="normal" id="safe-B-3-02" x="931.00" y="110.46">B</text><text data-cell="(2, 0)" data-kind="normal" id="safe-B-3-03" x="109.46" y="247.38">B</text><text data-cell="(2, 3)" data-hidden-zone="1" data-kind="special" id="safe-B-3-04" x="314.85" y="247.38">B</text><text data-cell="(2, 3)" data-hidden-zone="1" data-kind="special" id="safe-B-3-05" x="301.85" y="247.38">B</text><text data-cell="(2, 4)" data-hidden-zone="1" data-kind="special" id="safe-B-3-06" x="383.31" y="247.38">B</text><text data-cell="(2, 7)" data-kind="normal" id="safe-B-3-07" x="588.69" y="247.38">B</text><text data-cell="(3, 3)" data-kind="normal" id="safe-B-3-08" x="314.85" y="315.85">B</text><text data-cell="(3, 4)" data-hidden-zone="1" data-kind="special" id="safe-B-3-09" x="383.31" y="315.85">B</text><text data-cell="(3, 4)" data-hidden-zone="1" data-kind="special" id="safe-B-3-10" x="370.31" y="315.85">B</text><text data-cell="(4, 10)" data-kind="normal" id="safe-B-3-11" x="794.08" y="384.31">B</text><text data-cell="(5, 2)" data-kind="normal" id="safe-B-3-12" x="246.38" y="452.77">B</text><text data-cell="(5, 9)" data-hidden-zone="2" data-kind="special" id="safe-B-3-13" x="725.62" y="452.77">B</text><text data-cell="(6, 9)" data-hidden-zone="2" data-kind="special" id="safe-B-3-14" x="725.62" y="521.23">B</text><text data-cell="(6, 9)" data-hidden-zone="2" data-kind="special" id="safe-B-3-15" x="712.62" y="521.23">B</text><text data-cell="(6, 10)" data-hidden-zone="2" data-kind="special" id="safe-B-3-16" x="794.08" y="521.23">B</text><text data-cell="(6, 10)" data-hidden-zone="2" data-kind="special" id="safe-B-3-17" x="781.08" y="521.23">B</text><text data-cell="(7, 12)" data-kind="normal" id="safe-B-3-18" x="931.00" y="589.69">B</text><text data-cell="(8, 6)" data-kind="normal" id="safe-B-3-19" x="520.23" y="658.15">B</text><text data-cell="(9, 2)" data-hidden-zone="3" data-kind="special" id="safe-B-3-20" x="246.38" y="726.62">B</text><text data-cell="(9, 2)" data-hidden-zone="3" data-kind="special" id="safe-B-3-21" x="233.38" y="726.62">B</text><text data-cell="(9, 2)" data-hidden-zone="3" data-kind="special" id="safe-B-3-22" x="220.38" y="726.62">B</text><text data-cell="(9, 3)" data-kind="normal" id="safe-B-3-23" x="314.85" y="726.62">B</text><text data-cell="(10, 0)" data-kind="normal" id="safe-B-3-24" x="109.46" y="795.08">B</text><text data-cell="(10, 2)" data-hidden-zone="3" data-kind="special" id="safe-B-3-25" x="246.38" y="795.08">B</text><text data-cell="(10, 2)" data-hidden-zone="3" data-kind="special" id="safe-B-3-26" x="233.38" y="795.08">B</text><text data-cell="(10, 9)" data-hidden-zone="4" data-kind="special" id="safe-B-3-27" x="725.62" y="795.08">B</text><text data-cell="(10, 9)" data-hidden-zone="4" data-kind="special" id="safe-B-3-28" x="712.62" y="795.08">B</text><text data-cell="(11, 8)" data-kind="normal" id="safe-B-3-29" x="657.15" y="863.54">B</text><text data-cell="(11, 9)" data-hidden-zone="4" data-kind="special" id="safe-B-3-30" x="725.62" y="863.54">B</text><text data-cell="(11, 10)" data-hidden-zone="4" data-kind="special" id="safe-B-3-31" x="794.08" y="863.54">B</text><text data-cell="(11, 10)" data-hidden-zone="4" data-kind="special" id="safe-B-3-32" x="781.08" y="863.54">B</text><text data-cell="(12, 4)" data-kind="normal" id="safe-B-3-33" x="383.31" y="932.00">B</text><text data-cell="(12, 12)" data-kind="normal" id="safe-B-3-34" x="931.00" y="932.00">B</text><text data-added-in="v2" data-cell="(6, 8)" data-kind="normal" id="safe-B-3-35" x="657.15" y="521.23">B</text><text data-added-in="v2" data-cell="(9, 10)" data-kind="normal" id="safe-B-3-36" x="794.08" y="726.62">B</text><text data-added-in="v2" data-cell="(0, 8)" data-kind="normal" id="safe-B-3-37" x="657.15" y="110.46">B</text><text data-added-in="v2" data-cell="(6, 4)" data-kind="normal" id="safe-B-3-38" x="383.31" y="521.23">B</text><text data-added-in="v2" data-cell="(3, 12)" data-kind="normal" id="safe-B-3-39" x="931.00" y="315.85">B</text><text data-added-in="v2" data-cell="(1, 10)" data-kind="normal" id="safe-B-3-40" x="794.08" y="178.92">B</text></g><g dominant-baseline="middle" fill="#0057d9" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="800" id="access-card-points" paint-order="stroke fill" stroke="#ffffff" stroke-width="3" text-anchor="middle"><text data-cell="(0, 11)" data-wall-side="N" id="card-C-3-1" x="842.31" y="69.00">C</text><text data-cell="(12, 1)" data-wall-side="N" id="card-C-3-2" x="157.69" y="890.54">C</text><text data-cell="(0, 0)" data-wall-side="N" id="card-C-3-3" x="89.23" y="69.00">C</text><text data-cell="(10, 10)" data-wall-side="N" id="card-C-3-4" x="773.85" y="753.62">C</text><text data-cell="(5, 6)" data-wall-side="E" id="card-C-3-5" x="520.23" y="431.54">C</text><text data-added-in="v2" data-cell="(7, 0)" data-wall-side="N" id="card-C-3-6" x="89.23" y="548.23">C</text></g></g>
+</svg>
+</div>
+<div class="meta">
+    门禁卡 C：6 张；保险箱 B：40 个，其中普通区 20 个、隐藏区 20 个；摄像头 CAM：8 个；激光 L：12 个。
+  </div>
+</section>
+</main>
+</body>
+</html>
